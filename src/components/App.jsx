@@ -5,7 +5,7 @@ import MultiValueField from "./MultiValueField";
 const App = () => {
   const { register, control, handleSubmit } = useForm({
     defaultValues: {
-      authors: [{ name: "" }],
+      authors: [{ value: "" }],
     },
   });
 

@@ -13,13 +13,23 @@ const MultiValueField = ({ register, control, name }) => {
     }
   };
 
+  const styleInput = (index) => {
+    if (index !== fields.length - 1) {
+      const size = fields[index].value.length;
+      return { width: (size < 30 ? size : 30) + "ch" };
+    }
+
+    return {};
+  };
+
   return (
     <div className="mv-field">
       {fields.map((field, index) => (
         <input
           type="text"
           key={field.id}
-          {...register(`authors.${index}.name`)}
+          style={styleInput(index)}
+          {...register(`authors.${index}.value`)}
           onKeyDown={(e) => handleKeyDown(e, index)}
         />
       ))}
