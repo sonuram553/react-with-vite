@@ -1,0 +1,16 @@
+.mv-field {
+  width: 600px;
+  margin: auto;
+
+  border: 1px solid;
+  display: flex;
+  padding: 8px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mv-field input:last-child {
+  flex: 1;
+  border: none;
+  outline: none;
+}
