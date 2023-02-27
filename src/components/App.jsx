@@ -3,7 +3,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import MultiValueField from "./MultiValueField";
 
 const App = () => {
-  const { register, control, handleSubmit } = useForm({
+  const { register, setValue, control, handleSubmit } = useForm({
     defaultValues: {
       authors: [{ value: "" }],
     },
@@ -11,7 +11,12 @@ const App = () => {
 
   return (
     <form onSubmit={handleSubmit(() => {})}>
-      <MultiValueField register={register} control={control} name="authors" />
+      <MultiValueField
+        name="authors"
+        control={control}
+        register={register}
+        setValue={setValue}
+      />
     </form>
   );
 };
