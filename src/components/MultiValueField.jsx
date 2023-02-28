@@ -1,8 +1,14 @@
 import React from "react";
 import { useFieldArray, useWatch } from "react-hook-form";
 
-const MultiValueField = ({ register, control, name }) => {
-  const { fields, append, remove } = useFieldArray({ control, name });
+const MultiValueField = ({ register, control, name, error }) => {
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name,
+    rules: {
+      minLength: { value: 2, message: "Enter at least one author" },
+    },
+  });
   const values = useWatch({ name, control });
 
   const handleKeyDown = (e, index) => {
@@ -10,6 +16,14 @@ const MultiValueField = ({ register, control, name }) => {
       e.preventDefault();
       addValues(index);
     }
+  };
+
+  const handleOnBlur = (index) => {
+    if (index < fields.length - 1 && !values[index].value.trim()) {
+      remove(index);
+      return;
+    }
+    addValues(index);
   };
 
   const addValues = (index) => {
@@ -39,25 +53,31 @@ const MultiValueField = ({ register, control, name }) => {
     return {};
   };
 
-  return (
-    <div className="mv-field">
-      {fields.map((field, index) => {
-        const { onBlur, ...rest } = register(`${name}.${index}.value`);
+  const renderError = () => {
+    let msg = error?.root?.message;
+    if (msg) return <p>{msg}</p>;
+    return null;
+  };
 
-        return (
-          <input
-            {...rest}
-            type="text"
-            key={field.id}
-            onBlur={(e) => {
-              onBlur(e);
-              addValues(index);
-            }}
-            style={styleInput(index)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-          />
-        );
-      })}
+  return (
+    <div>
+      <div className="mv-field">
+        {fields.map((field, index) => {
+          return (
+            <input
+              type="text"
+              key={field.id}
+              style={styleInput(index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              {...register(`${name}.${index}.value`, {
+                onBlur: handleOnBlur,
+              })}
+            />
+          );
+        })}
+      </div>
+
+      {renderError()}
     </div>
   );
 };
