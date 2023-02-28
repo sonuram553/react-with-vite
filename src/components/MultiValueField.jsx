@@ -55,29 +55,26 @@ const MultiValueField = ({ register, control, name, error }) => {
 
   const renderError = () => {
     let msg = error?.root?.message;
-    if (msg) return <p>{msg}</p>;
+    if (msg) return <p className="mv-field__error-msg">{msg}</p>;
     return null;
   };
 
   return (
-    <div>
-      <div className="mv-field">
-        {fields.map((field, index) => {
-          return (
-            <input
-              type="text"
-              key={field.id}
-              style={styleInput(index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-              tabIndex={index === fields.length - 1 ? "0" : "-1"}
-              {...register(`${name}.${index}.value`, {
-                onBlur: handleOnBlur,
-              })}
-            />
-          );
-        })}
-      </div>
-
+    <div className="mv-field">
+      {fields.map((field, index) => {
+        return (
+          <input
+            type="text"
+            key={field.id}
+            style={styleInput(index)}
+            onKeyDown={(e) => handleKeyDown(e, index)}
+            tabIndex={index === fields.length - 1 ? "0" : "-1"}
+            {...register(`${name}.${index}.value`, {
+              onBlur: handleOnBlur,
+            })}
+          />
+        );
+      })}
       {renderError()}
     </div>
   );
