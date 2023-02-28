@@ -11,7 +11,7 @@ const App = () => {
   } = useForm({
     mode: "onBlur",
     defaultValues: {
-      authors: [{ value: "" }],
+      authors: [{ value: "sonu ram" }, { value: "sonu ram" }, { value: "" }],
     },
   });
 

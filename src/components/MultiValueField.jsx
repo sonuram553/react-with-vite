@@ -69,6 +69,7 @@ const MultiValueField = ({ register, control, name, error }) => {
               key={field.id}
               style={styleInput(index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
+              tabIndex={index === fields.length - 1 ? "0" : "-1"}
               {...register(`${name}.${index}.value`, {
                 onBlur: handleOnBlur,
               })}
