@@ -60,23 +60,27 @@ const MultiValueField = ({ register, control, name, error }) => {
   };
 
   return (
-    <div className="mv-field">
+    <ul className="mv-field">
       {fields.map((field, index) => {
+        const size = fields.length;
+
         return (
-          <input
-            type="text"
-            key={field.id}
-            style={styleInput(index)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-            tabIndex={index === fields.length - 1 ? "0" : "-1"}
-            {...register(`${name}.${index}.value`, {
-              onBlur: handleOnBlur,
-            })}
-          />
+          <li key={field.id}>
+            <input
+              type="text"
+              style={styleInput(index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              tabIndex={index === size - 1 ? "0" : "-1"}
+              {...register(`${name}.${index}.value`, {
+                onBlur: handleOnBlur,
+              })}
+            />
+            {index !== size - 1 && <span onClick={() => remove(index)}>D</span>}
+          </li>
         );
       })}
       {renderError()}
-    </div>
+    </ul>
   );
 };
 
